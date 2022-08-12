@@ -1,4 +1,8 @@
 # 20questions-BE-
+## 1.ERD ##
+![20questions-erd](https://user-images.githubusercontent.com/109029407/184304942-6f0c3b24-2f5b-4d87-b431-b06882faac37.png)
+---
+## 2. API 설계 ##
 |기능|method|URL(service)|API URL|request|response|담당자|
 |------|---|---|---|---|---|---|
 |회원가입|POST|/|/api/auth/signup|{"id" : "Sumin", "password" : "1234", "confirm": "1234"}|{"message": "회원가입을 축하드립니다!"}|최성영|
