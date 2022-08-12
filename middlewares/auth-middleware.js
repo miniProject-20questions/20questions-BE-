@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
   try {
     const { id } = jwt.verify(authToken,process.env.COOKIE_NAME);
     await userRepository.getUser(id).then((id) => {
-      res.locals.id = id;
+      res.locals.user = user;
       next();
     });
   } catch (err) {
