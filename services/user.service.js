@@ -6,6 +6,10 @@ class UserService{
         if(password!==confirm){
             return {status:401,message:"같지 않은 비밀번호입니다."}
         }
+        const user=await this.userRepository.getUser(id);
+        if(user!=undefined){
+            return {status:400,message:"이미 있는 아이디"}
+        }
         const create=await this.userRepository.createUser(id,password);
         if(create==undefined){
             return {status:400,message:"회원가입실패"}
