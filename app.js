@@ -11,5 +11,5 @@ const indexRouter = require('./routers');
 app.use('/api', indexRouter);
 
 app.listen(port, () => {
-  console.log(port, '/api로 진행해주세요');
+   console.log(port, '/api로 진행해주세요');
 });
