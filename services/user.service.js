@@ -1,4 +1,5 @@
 const UserRepository=require("../repositories/user.repository")
+const jwt = require("jsonwebtoken")
 
 class UserService{
     userRepository=new UserRepository();
@@ -23,7 +24,8 @@ class UserService{
         }else if(password!=user.password){
             return {status:401,message:"잘못된 id 또는 pw"}
         }
-        return {status:200,message:id+"님, 환영합니다!"}
+        const token = jwt.sign({id}, process.env.SECRET_KEY);
+        return {status:200,message:id+"님, 환영합니다!",token:token}
     }
 }
 
