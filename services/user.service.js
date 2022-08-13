@@ -1,6 +1,9 @@
 const UserRepository = require('../repositories/user.repository');
 const jwt = require('jsonwebtoken');
-
+// 아이디 길이는 4~9자리
+// 영문 대소문자,숫자만 사용가능
+// 비밀번호 길이도 4~9자리
+// 영문대소문자, 숫자만 사용가능
 class UserService {
    userRepository = new UserRepository();
    userSignup = async (id, password, confirm) => {
@@ -8,9 +11,16 @@ class UserService {
          return { status: 401, message: '같지 않은 비밀번호입니다.' };
       }
       const user = await this.userRepository.getUser(id);
+      const reg_Id = /^[A-Za-z0-9]{3,9}$/.test(id);
+      const reg_Pw = /^[A-Za-z0-9]{3,9}$/.test(password);
       if (user != undefined) {
          return { status: 400, message: '이미 있는 아이디' };
+      } else if (!reg_Id) {
+         return { status: 400, message: '조건이 맞지 않은 아이디' };
+      } else if (!reg_Pw) {
+         return { status: 400, message: '조건이 맞지 않은 비밀번호' };
       }
+
       const create = await this.userRepository.createUser(id, password);
       if (create == undefined) {
          return { status: 400, message: '회원가입실패' };
