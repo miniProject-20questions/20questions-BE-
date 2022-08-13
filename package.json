@@ -2,7 +2,7 @@
   "name": "20question_be",
   "version": "1.0.0",
   "description": "![20questions-erd](https://user-images.githubusercontent.com/109029407/184304942-6f0c3b24-2f5b-4d87-b431-b06882faac37.png)\r ---\r ## 2. API 설계 ##",
-  "main": ".prettierrc.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
