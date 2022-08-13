@@ -1,6 +1,5 @@
 node_modules
 .env
-config/config.js
 migrations/20220812114317-create-users.js
 migrations/20220812115315-create-questions.js
 migrations/20220813011110-create-pictures.js
