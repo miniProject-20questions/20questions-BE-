@@ -1,7 +1,7 @@
 node_modules
 .env
-config/config.js
 migrations/20220812114317-create-users.js
 migrations/20220812115315-create-questions.js
-migrations/20220812115319-create-pictures.js
+migrations/20220813011110-create-pictures.js
 migrations/20220812115339-create-quizes.js
+.prettierrc.js
