@@ -17,6 +17,14 @@ class UserRepository {
       });
       return create;
    };
+   getNickname=async(nickname)=>{
+      const nick = await Users.findOne({
+         where: {
+            nickname,
+         },
+      });
+      return nick;
+   }
 }
 
 module.exports = UserRepository;

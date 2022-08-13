@@ -11,16 +11,21 @@ class UserService {
          return { status: 401, message: '같지 않은 비밀번호입니다.' };
       }
       const user = await this.userRepository.getUser(id);
+      const nick = await this.userRepository.getNickname(nickname);
       const reg_Id = /^[A-Za-z0-9]{3,9}$/.test(id);
       const reg_Pw = /^[A-Za-z0-9]{3,9}$/.test(password);
-      const reg_Nick = /^[A-Za-z0-9]{3,9}$/.test(nickname);
+      // const reg_Nick = /^[A-Za-z0-9]{3,9}$/.test(nickname);
+      const reg_Nick1 = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g.test(nickname);
+      const reg_Nick2 = nickname.length <4 || nickname>9;
       if (user != undefined) {
          return { status: 400, message: '이미 있는 아이디' };
+      }else if(nick!=undefined){
+         return { status: 400, message: '이미 있는 닉네임' };  
       } else if (!reg_Id) {
          return { status: 400, message: '조건이 맞지 않은 아이디' };
       } else if (!reg_Pw) {
          return { status: 400, message: '조건이 맞지 않은 비밀번호' };
-      } else if (!reg_Nick) {
+      } else if (reg_Nick1 || reg_Nick2) {
          return { status: 400, message: '조건이 맞지 않은 닉네임' };
       }
 
