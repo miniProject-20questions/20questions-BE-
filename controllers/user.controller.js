@@ -13,7 +13,6 @@ class UserController {
    userSignin = async (req, res, next) => {
       const { id, password } = req.body;
       const inner = await this.userService.userSignin(id, password);
-      const token = jwt.sign({ id }, process.env.SECRET_KEY);
       res.cookie(process.env.COOKIE_NAME, inner.token, { maxAge: 180000 });
       return res.status(inner.status).json({
          message: inner.message,
