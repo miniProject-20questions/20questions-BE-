@@ -1,5 +1,5 @@
 {
-  "name": "sub-main",
+  "name": "20question_be",
   "version": "1.0.0",
   "description": "![20questions-erd](https://user-images.githubusercontent.com/109029407/184304942-6f0c3b24-2f5b-4d87-b431-b06882faac37.png)\r ---\r ## 2. API 설계 ##",
   "main": "app.js",
@@ -22,11 +22,6 @@
     "express": "^4.18.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
-    "mysql2": "^2.3.3",
-    "nodemon": "^2.0.19",
-    "sequelize": "^6.21.3"
-  },
-  "devDependencies": {
-    "sequelize-cli": "^6.4.1"
+    "nodemon": "^2.0.19"
   }
 }

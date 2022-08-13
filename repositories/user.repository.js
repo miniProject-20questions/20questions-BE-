@@ -9,13 +9,22 @@ class UserRepository {
       });
       return user;
    };
-   createUser = async (id, password) => {
+   createUser = async (id, password,nickname) => {
       const create = await Users.create({
          id,
          password,
+         nickname,
       });
       return create;
    };
+   getNickname=async(nickname)=>{
+      const nick = await Users.findOne({
+         where: {
+            nickname,
+         },
+      });
+      return nick;
+   }
 }
 
 module.exports = UserRepository;
