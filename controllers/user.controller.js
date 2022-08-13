@@ -11,7 +11,6 @@ class UserController {
       });
    };
    userSignin = async (req, res, next) => {
-      console.log(req.body);
       const { id, password } = req.body;
       const inner = await this.userService.userSignin(id, password);
       res.cookie(process.env.COOKIE_NAME, inner.token, { maxAge: 180000 });
