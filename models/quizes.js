@@ -14,10 +14,12 @@ module.exports = (sequelize, DataTypes) => {
    Quizes.init(
       {
          quizId: {
+            allowNull: false,
             primaryKey: true,
             type: DataTypes.INTEGER,
+            autoIncrement: true,
          },
-         id: DataTypes.STRING,
+         userId: DataTypes.INTEGER,
          title: DataTypes.STRING,
          category: DataTypes.INTEGER,
          answer: DataTypes.STRING,
