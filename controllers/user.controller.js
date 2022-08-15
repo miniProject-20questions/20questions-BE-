@@ -26,8 +26,10 @@ class UserController {
 
       const inner = await this.userService.userSignin(id, password);
 
-      //토큰 쿠키에 저장
+      //토큰 쿠키에 저장 테스트용
       // res.cookie(process.env.COOKIE_NAME, inner.token, { maxAge: 180000 });
+      
+      //프론트로 토큰 전송
       return res.send({
          message: inner.message,
          token: inner.token
