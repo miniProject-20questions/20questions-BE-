@@ -19,10 +19,28 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             autoIncrement: true,
          },
-         userId: DataTypes.INTEGER,
-         title: DataTypes.STRING,
-         category: DataTypes.INTEGER,
-         answer: DataTypes.STRING,
+         userId: {
+            type: DataTypes.INTEGER,
+            required : true,            
+         },
+         title: {
+            type: DataTypes.STRING,
+            required : true,
+         },
+         category: {
+            type: DataTypes.INTEGER,
+            required : true,            
+         },
+         answer: {
+            type: DataTypes.STRING,
+            required : true,
+            allowNull : false,
+         },
+         createdAt: {
+            allowNull: false,
+            type: DataTypes .DATE,
+            defaultValue: sequelize.fn('now'),
+          },
       },
       {
          sequelize,
