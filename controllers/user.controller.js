@@ -27,11 +27,14 @@ class UserController {
       const inner = await this.userService.userSignin(id, password);
 
       //토큰 쿠키에 저장
-      res.cookie(process.env.COOKIE_NAME, inner.token, { maxAge: 180000 });
-
-      return res.status(inner.status).json({
+      // res.cookie(process.env.COOKIE_NAME, inner.token, { maxAge: 180000 });
+      return res.send({
          message: inner.message,
+         token: inner.token
       });
+      // return res.status(inner.status).json({
+      //    message: inner.message,
+      // });
    };
 }
 
