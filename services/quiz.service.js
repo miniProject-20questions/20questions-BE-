@@ -23,51 +23,36 @@ class QuizService {
         );
 
         return '포스트 생성';
-    }
-
-    getQuiz = async () => {        
-
-        try {
-            const result = await this.quizRepository.getQuiz();
-
-            return res.status(200).json({ result });            
-        } catch (err) {
-            console.log (err);
-
-            return res.status(500).json(err.message);
-        }
     };
 
-    getQuizById = async (req,res) => {              
+    getQuiz = async () => {                 
 
-        try {
-            const result = await this.quizRepository.getQuizById( quizId );
-            if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.')
-
-            return res.status(200).json({ result });
-        } catch (err) {
-
-            return res.json(err.message);
-        }
-    };
-
-    deleteQuiz = async ( quizId ) => {             
-
-        try {
-            const result = await this.quizRepository.getQuizById( quizId );
-            if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.');
-            if (result.userId !== userId) throw new Error('퀴즈 작성자만 퀴즈를 삭제할 수 있습니다.');
+        const result = await this.quizRepository.getQuiz();        
+        return result;
             
-            const isDeleted = await this.quizRepository.deleteQuiz( quizId );
-                        
-            return res.status(200).json('퀴즈가 삭제되었습니다.');            
-        } catch (err) {
-            console.log (err);
+    };
+    
 
-            return res.status(400).json(err.message);
-        }
+    getQuizById = async ( quizId ) => {
+
+        const result = await this.quizRepository.getQuizById( quizId );
+        if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.')
+        return result;          
+        
     };
 
-}
+    deleteQuiz = async ( quizId, userId ) => {             
+
+        const result = await this.quizRepository.getQuizById( quizId );
+        if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.');
+        if (result.userId !== userId) throw new Error('퀴즈 작성자만 퀴즈를 삭제할 수 있습니다.');
+            
+        const isDeleted = await this.quizRepository.deleteQuiz( quizId, userId );
+                        
+        return isDeleted;
+        }
+};
+
+
 
 module.exports = QuizService;
