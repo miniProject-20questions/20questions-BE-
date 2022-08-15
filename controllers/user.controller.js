@@ -30,15 +30,24 @@ class UserController {
          const inner = await this.userService.userSignin(id, password);
 
          //토큰 쿠키에 저장 테스트용
-//          res.cookie(process.env.COOKIE_NAME, inner.token, { maxAge: 1800000000 });
+         // res.cookie(process.env.COOKIE_NAME, inner.token, { maxAge: 1800000000 });
 
          //프론트로 토큰 전송
+         if(inner.token===res.locals.login){
+            const error= new Error("Forbidden")
+            error.code=403;
+            throw error
+         }
          return res.status(inner.status).json({
             message: "SUCCES",
             token: inner.token
          });
 
-      }catch(err){
+      }catch(error){
+         if(error===403){
+            console.log(error)
+            return res.status(error.code).send(error.message);
+         }
          console.log(err)
          return res.status(err.code).send(err.message);
       }

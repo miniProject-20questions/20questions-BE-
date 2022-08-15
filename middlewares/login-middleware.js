@@ -6,11 +6,6 @@ const userRepository = new UserRepository();
 module.exports = (req, res, next) => {
    const { authorization } = req.headers;
    // const authorization = req.headers.cookie;
-   
-   if (authorization) {
-      return res.status(401).send({
-         errorMessage: '이미 로그인 되어 있습니다.',
-      });
-   }
+   res.locals.login=authorization
    next();
 };
