@@ -9,6 +9,6 @@ router.get("/",authMiddlewares,userController.checkUser);
 //회원가입>>controller
 router.post('/signup', userController.userSignup);
 //로그인>>controller
-router.post('/signin', loginmidlleware, userController.userSignin);
+router.post('/signin',userController.userSignin);
 
 module.exports = router;
