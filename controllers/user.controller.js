@@ -3,6 +3,9 @@ require('dotenv').config();
 
 class UserController {
    userService = new UserService();
+   checkUser=async(req,res,next)=>{
+      res.json(res.locals.user);
+   }
    userSignup = async (req, res, next) => {
       const { id, password, confirm ,nickname} = req.body;
       const upper = await this.userService.userSignup(id, password, confirm,nickname);

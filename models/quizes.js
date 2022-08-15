@@ -14,8 +14,10 @@ module.exports = (sequelize, DataTypes) => {
    Quizes.init(
       {
          quizId: {
+            allowNull: false,
             primaryKey: true,
             type: DataTypes.INTEGER,
+            autoIncrement: true,
          },
          userId: {
             type: DataTypes.INTEGER,

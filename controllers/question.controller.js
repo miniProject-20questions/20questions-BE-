@@ -21,7 +21,7 @@ class QuestionsController {
     //상세페이지(질문등록)
     createQuestion = async (req, res, next) => {
         const { quizId } = req.params;
-        const { userId } = res.locals;
+        const { userId } = res.locals.user;
         const { content } = req.body;
 
         try{
@@ -43,7 +43,7 @@ class QuestionsController {
         const { quizId } = req.params;
         const { questionId } = req.params;
         const { solved } = req.body;
-        const { userId } = res.locals;
+        const { userId } = res.locals.user;
 
         try{
             await this.questionService.checkQuestion(quizId, questionId, solved, userId);
