@@ -40,5 +40,14 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Questions',
   });
+
+  Questions.associate = function (models) {
+    models.Questions.belongsTo(models.Quizes, {
+    foreignKey: "quizId",
+    onUpdate: "cascade",
+    onDelete: "cascade",
+    });
+    };
+
   return Questions;
 };
