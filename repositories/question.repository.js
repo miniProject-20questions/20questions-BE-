@@ -2,49 +2,40 @@ const { Questions, Quizes } = require('../models');
 
 class QuestionRepository {
 
-    //해당 퀴즈의 userId 가져오기
-    compareQuizer = async (quizId) => {
-        const user = await Quizes.findOne({
-            attributes: ['userId'],
-            where: {quizId},
-            raw: true,
-        })
-
-        return user;
-    }
 
     // 해당 퀴즈의 전체 질문 조회(count 오름차순)
     findAllQuestions = async (quizId) => {
         const questions = await Questions.findAll({
-            where: {quizId},
+            where: { quizId },
             order: [['count', 'ASC']],
         })
 
         return questions;
     }
 
-    //이전 질문의 solved 값 가져오기
-    checkSolved = async (quizId) => {
-        const exSolved = await Questions.findOne({
-            attributes: ['solved'],
+
+    //해당 퀴즈의 userId, answer 가져오기
+    compareQuiz = async (quizId) => {
+        const result = await Quizes.findOne({
+            attributes: ['userId', 'answer'],
             where: { quizId },
-            order: [['count', 'DESC']],
             raw: true,
         })
 
-        return exSolved;
+        return result;
     }
 
-    //이전 질문의 count 값 가져오기
-    findMaxCount = async (quizId) => {
-        const maxCount = await Questions.findOne({
-            attributes: ['count'],
+
+    //이전 질문의 count, content, solved 값 가져오기
+    findExQuestion = async (quizId) => {
+        const exQuestion = await Questions.findOne({
+            attributes: ['count', 'content', 'solved'],
             where: { quizId },
             order: [['count', 'DESC']],
             raw: true,
         })
 
-        return maxCount;
+        return exQuestion;
     }
 
     //퀴즈에 질문 등록하기
@@ -59,16 +50,16 @@ class QuestionRepository {
         return;
     }
 
-    //해당 퀴즈의 정답 가져오기
-    compareAnswer = async (quizId) => {
 
-        const quiz = await Quizes.findOne({
-            attributes: ['answer'],
-            where: {quizId},
+    //해당 질문의 solved와 content 값을 questionId로 찾기
+    findQuestion = async (questionId) => {
+        const question = await Questions.findOne({
+            attributes: ['content', 'solved'],
+            where: { questionId },
             raw: true,
         })
 
-        return quiz;
+        return question;
     }
 
 
@@ -76,7 +67,7 @@ class QuestionRepository {
     checkQuestion = async (questionId, solved) => {
         await Questions.update(
             { solved },
-            { where: { questionId }}
+            { where: { questionId } }
         );
 
         return;
