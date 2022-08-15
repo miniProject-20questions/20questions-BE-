@@ -18,6 +18,7 @@ class UserController {
          
          return res.status(upper.status).send("SUCCES")
       }catch(err){
+         console.log(err)
          return res.status(err.code).send(err.message)
       }
    };
@@ -38,6 +39,7 @@ class UserController {
          });
 
       }catch(err){
+         console.log(err)
          return res.status(err.code).send(err.message);
       }
    };
