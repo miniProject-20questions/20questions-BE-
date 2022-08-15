@@ -12,7 +12,8 @@ class QuestionsController {
 
             res.status(200).json({ data: questions});
         }catch(err){
-            res.status(400).send(err.message);
+            res.status(err.code).send(err.message);
+            console.log(err)
             return;
         }
         
@@ -25,15 +26,16 @@ class QuestionsController {
         const { content } = req.body;
 
         try{
-            const result = await this.questionService.createQuestion(
+            await this.questionService.createQuestion(
                 quizId,
                 userId,
                 content
             );
 
-            res.status(200).json({ message: result });
+            res.status(200).send(SUCCESS);
         }catch(err){
-            res.status(400).send(err.message);
+            res.status(err.code).send(err.message);
+            console.log(err)
             return;
         }
     };
@@ -48,9 +50,10 @@ class QuestionsController {
         try{
             await this.questionService.checkQuestion(quizId, questionId, solved, userId);
 
-            res.status(200).json({ message: "질문 OX 체크되었습니다." });
+            res.status(200).send(SUCCESS);
         }catch(err){
-            res.status(400).send(err.message);
+            res.status(err.code).send(err.message);
+            console.log(err)
             return;
 
         }
