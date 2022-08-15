@@ -24,27 +24,22 @@ class QuizRepository{
     }
 
     getQuiz = async ( quizId ) => {
-        await Quizes.findAll({
+        return await Quizes.findAll({
             order : [['createdAt', 'DESC']]
-        });
-        
-        return;
+        });       
+    
     };
 
     deleteQuiz = async (quizId, userId) => {
-        await Quizes.destroy ({
+        return await Quizes.destroy ({
             where : { quizId, userId }
-        });
-
-        return;
+        });        
     };
 
     getQuizById = async ( quizId ) => {
-        await Quizes.findById ({
-            where: { quizId : quizId }
+        return await Quizes.findOne ({
+            where: { quizId }
         });
-
-        return;
     };
 
 

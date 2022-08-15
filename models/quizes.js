@@ -47,5 +47,14 @@ module.exports = (sequelize, DataTypes) => {
          modelName: 'Quizes',
       }
    );
+   
+   Quizes.associate = function (models) {
+      models.Quizes.hasMany(models.Questions, {
+      foreignKey: "quizId",
+      onUpdate: "cascade",
+      onDelete: "cascade",
+      });
+      };
+
    return Quizes;
 };
