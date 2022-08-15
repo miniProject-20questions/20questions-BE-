@@ -1,5 +1,5 @@
 const QuizService = require('../services/quiz.service');
-const joi = require('Joi')
+const joi = require('joi')
 
 class QuizController {
     quizService;
