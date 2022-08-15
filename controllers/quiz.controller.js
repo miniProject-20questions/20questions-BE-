@@ -1,4 +1,5 @@
 const QuizService = require('../services/quiz.service');
+const joi = require('Joi')
 
 class QuizController {
     quizService;
@@ -10,7 +11,7 @@ class QuizController {
     // 퀴즈 포스트
     postQuiz = async (req,res) => {
         const { title, category, answer } = req.body;        
-        const { userId } = res.locals;
+        const { userId } = res.locals.user;
         
 
         try{
@@ -21,7 +22,7 @@ class QuizController {
                 userId: joi.number().required(),
         });
 
-            const result = await this.quizService.postQuiz(userId, category, answer, userId);
+            const result = await this.quizService.postQuiz(userId, title, category, answer);
 
             return res.status(200).json( result );
         }catch(err){
@@ -65,8 +66,8 @@ class QuizController {
 
     //퀴즈 삭제
     deleteQuiz = async (req,res) => {    
-        const { userId } = res.locals;
-        const { quizId } = res.params;
+        const { userId } = res.locals.user;
+        const { quizId } = req.params;
             
 
         try {
