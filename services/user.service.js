@@ -9,8 +9,16 @@ class UserService {
 
    //회원가입 진행
    userSignup = async (id, password, confirm,nickname) => {
+      if(id===null || password===null || confirm===null || nickname===null){
+         const error= new Error("BAD_REQUEST")
+         error.code=400;
+         throw error
+      }
+
       if (password !== confirm) {
-         return { status: 401, message: '같지 않은 비밀번호입니다.' };
+         const error= new Error("BAD_REQUEST")
+         error.code=400;
+         throw error
       }
       //user:이미있는 유저중에 같은 id를 사용하는지 확인하기위해서 id로 유저정보를 가지고온다.
       const user = await this.userRepository.getUser(id);
@@ -30,44 +38,73 @@ class UserService {
       
       //user가 없으면 id가 같은 유저가 없다.
       if (user != undefined) {
-         return { status: 400, message: '이미 있는 아이디' };
+         const error= new Error("BAD_VALIDATION");
+         error.code=403;
+         throw error
+
       }//nick이 없으면 nickname가 같은 유저가 없다.
       else if(nick!=undefined){
-         return { status: 400, message: '이미 있는 닉네임' };  
+         const error= new Error("BAD_VALIDATION");
+         error.code=403;
+         throw error
       }//정규식으로 확인되는 아이디
        else if (!reg_Id) {
-         return { status: 400, message: '조건이 맞지 않은 아이디' };
+         const error= new Error("BAD_VALIDATION");
+         error.code=403;
+         throw error
       }//정규식으로 확인되는 비밀번호
        else if (!reg_Pw) {
-         return { status: 400, message: '조건이 맞지 않은 비밀번호' };
+         const error= new Error("BAD_VALIDATION");
+         error.code=403;
+         throw error
       }//정규식으로 확인되는 닉네임
        else if (reg_Nick1 || reg_Nick2) {
-         return { status: 400, message: '조건이 맞지 않은 닉네임' };
+         const error= new Error("BAD_VALIDATION");
+         error.code=403;
+         throw error
       }
       
       //회원가입 진행
-      const create = await this.userRepository.createUser(id, password,nickname);
-      if (create == undefined) {
-         return { status: 400, message: '회원가입실패' };
+      try{
+         const create = await this.userRepository.createUser(id, password,nickname);
+         return { status: 200};
+      }catch(err){
+         const error= new Error("FAILD_SQL");
+         error.code=405 ;
+         throw error
       }
-      return { status: 200, message: '회원가입을 축하드립니다!' };
    };
 
    //로그인 진행
    userSignin = async (id, password) => {
+      if(id===null || password===null){
+         const error= new Error("BAD_REQUEST")
+         error.code=400;
+         throw error
+      }
       //유저의 존재를 확인하기 위해 id를 기준으로 Users테이블 탐색
-      const user = await this.userRepository.getUser(id);
-      if (user == undefined) {
-         return { status: 400, message: '잘못된 id 또는 pw' };
-      } else if (password != user.password) {
-         return { status: 401, message: '잘못된 id 또는 pw' };
+      try{
+         const user = await this.userRepository.getUser(id);
+         if (password != user.password) {
+            const error= new Error("BAD_VALIDATION");
+            error.code=403;
+            throw error
+         }
+      }catch(err){
+         if(err.code==403){
+            throw err;
+         }
+         const error= new Error("FAILD_SQL");
+         error.code=405;
+         throw error
       }
 
+      
       //토큰 생성
       const token = jwt.sign({ id }, process.env.SECRET_KEY);
       
       //토큰과 상태,메시지 전송
-      return { status: 200, message: user.nickname + '님, 환영합니다!', token: token };
+      return { status: 200, token: token };
    };
 }
 
