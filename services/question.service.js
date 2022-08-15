@@ -10,6 +10,7 @@ class QuestionService {
         return questions.map((question) => {
             return {
                 quizId: question.quizId,
+                questionId: question.questionId,
                 content: question.content,
                 solved: question.solved,
                 count: question.count,
