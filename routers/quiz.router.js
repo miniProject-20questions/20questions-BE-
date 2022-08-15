@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authMiddlewares = require('../middlewares/auth-middleware');
 
-router.use(authMiddlewares)
+// router.use(authMiddlewares)
 
 const QuizController = require('../controllers/quiz.controller');
 const quizController = new QuizController();
