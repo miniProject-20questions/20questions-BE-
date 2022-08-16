@@ -1,4 +1,5 @@
 const { Quizes, Questions, Users } = require('../models')
+const sequelize = require("sequelize");
 const mysql = require('mysql2');
 
 class QuizRepository{
@@ -16,17 +17,31 @@ class QuizRepository{
     };
 
     countQuizQuestion = async ( quizId ) => {
-        await Questions.count({
-            where : { quizId : quizId }
-        });
+        return await Questions.count({
+            where : { quizId }
+        });        
+    };
 
-        return;
-    }
+    // getNickname = async () => {
+    //     await Users.find
+    // };
 
-    getQuiz = async ( quizId ) => {
+    getQuiz = async (  ) => {
         return await Quizes.findAll({
-            order : [['createdAt', 'DESC']]
-        });       
+            order : [['createdAt', 'DESC']],
+            include: 
+            [
+                { 
+                model: Users ,
+                attributes: ['nickname'],    
+                },
+                { 
+                model: Questions ,  
+                },
+            ],
+            attributes: { exclude: [ 'answer', 'userId', 'updatedAt', 'Questions', 'User' ]}
+        });
+               
     
     };
 
@@ -38,7 +53,19 @@ class QuizRepository{
 
     getQuizById = async ( quizId ) => {
         return await Quizes.findOne ({
-            where: { quizId }
+            where: { quizId },
+            include :
+            [
+                { 
+                    model: Users ,
+                    attributes: ['nickname'],    
+                    },
+                    { 
+                    model: Questions,                    
+                    attributes: [[sequelize.fn('max', sequelize.col('count')), 'count']],  
+                    },
+            ],
+            attributes: { exclude: [ 'answer', 'userId', 'updatedAt', 'Questions', 'User' ]}
         });
     };
 

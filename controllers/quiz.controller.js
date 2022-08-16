@@ -32,10 +32,10 @@ class QuizController {
     };
 
     //퀴즈 전체 조회
-    getQuiz = async (req,res) => {              
+    getQuiz = async (req,res) => {       
 
         try {
-            const result = await this.quizService.getQuiz();
+            const result = await this.quizService.getQuiz(  );
 
             return res.status(200).json({ result });            
         } catch (err) {
