@@ -1,19 +1,18 @@
-const UserRepository = require('../repositories/user.repository');
 const QuizRepository = require('../repositories/quiz.repository');
 const QuestionRepository = require('../repositories/question.repository');
 
-class QuizService {
-    userRepository;
+class QuizService {    
     quizRepository;
     questionRepository;
 
     constructor() {
-        this.quizRepository = new QuizRepository();        
-        this.userRepository = new UserRepository();
+        this.quizRepository = new QuizRepository();
         this.questionRepository = new QuestionRepository();
     }
     
     postQuiz = async (userId, title, category, answer) => {
+
+        // const limitCategory = await this.quizRepository
 
         await this.quizRepository.postQuiz(
             userId,
@@ -22,12 +21,12 @@ class QuizService {
             answer
         );
 
-        return '포스트 생성';
+        return '퀴즈 생성';
     };
 
     getQuiz = async (  ) => {        
 
-        const result = await this.quizRepository.getQuiz(  );       
+        const result = await this.quizRepository.getQuiz();        
 
         return result.map((quiz)=> { 
             quiz.dataValues.count = quiz.Questions.length
@@ -36,25 +35,28 @@ class QuizService {
             delete quiz.dataValues.Questions
             delete quiz.dataValues.User
             
-            return quiz
+            return quiz;
         });
             
     };
     
 
-    getQuizById = async ( quizId ) => {
+    getQuizById = async ( quizId, userId ) => {
 
         const result = await this.quizRepository.getQuizById( quizId );
-        if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.')
+        if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.')       
 
         result.dataValues.count = result.dataValues.Questions[0].dataValues.count
         result.dataValues.nickname = result.dataValues.User.dataValues.nickname
 
+        if (result.dataValues.User.dataValues.userId !== userId ) {
+            result.dataValues.guest = true
+        } else {result.dataValues.guest = false}
+                
         delete result.dataValues.Questions
-        delete result.dataValues.User
+        delete result.dataValues.User        
                
-        return result;          
-        
+        return result;        
     };
 
     deleteQuiz = async ( quizId, userId ) => {             
@@ -67,7 +69,18 @@ class QuizService {
                         
         return isDeleted;
         }
+
+    updateCategory = async ( quizId, category ) => {
+
+        const result = await this.quizRepository.updateCategory ( quizId );
+        if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.');
+            
+        const isComplete = await this.quizRepository.updateCategory( quizId, category );
+                        
+        return {isComplete, message: "퀴즈가 완료되었습니다" };
+        }
 };
+
 
 
 
