@@ -46,7 +46,12 @@ class QuizService {
         const result = await this.quizRepository.getQuizById( quizId );
         if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.')       
 
-        result.dataValues.count = result.dataValues.Questions[0].dataValues.count
+        if(result.dataValues.Questions.length===0){
+            result.dataValues.count = 0
+        }else{
+            result.dataValues.count = result.dataValues.Questions[0].count
+        }
+
         result.dataValues.nickname = result.dataValues.User.dataValues.nickname
 
         if (result.dataValues.User.dataValues.userId !== userId ) {
