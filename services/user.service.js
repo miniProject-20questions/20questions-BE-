@@ -16,7 +16,7 @@ class UserService {
       }
 
       if (password !== confirm) {
-         const error= new Error("BAD_REQUEST")
+         const error= new Error("BAD_REQUEST_PW")
          error.code=400;
          throw error
       }
@@ -44,22 +44,22 @@ class UserService {
 
       }//nick이 없으면 nickname가 같은 유저가 없다.
       else if(nick!=undefined){
-         const error= new Error("BAD_VALIDATION");
+         const error= new Error("EXIST_NICK");
          error.code=403;
          throw error
       }//정규식으로 확인되는 아이디
        else if (!reg_Id) {
-         const error= new Error("BAD_VALIDATION");
+         const error= new Error("BAD_VALIDATION_ID");
          error.code=403;
          throw error
       }//정규식으로 확인되는 비밀번호
        else if (!reg_Pw) {
-         const error= new Error("BAD_VALIDATION");
+         const error= new Error("BAD_VALIDATION_PW");
          error.code=403;
          throw error
       }//정규식으로 확인되는 닉네임
        else if (reg_Nick1 || reg_Nick2) {
-         const error= new Error("BAD_VALIDATION");
+         const error= new Error("BAD_VALIDATION_NICK");
          error.code=403;
          throw error
       }
@@ -107,6 +107,7 @@ class UserService {
       return { status: 200, token: token };
    };
 
+   //아이디 중복확인
    idCheck=async(id)=>{
       if(id===undefined){
          const error= new Error("BAD_REQUEST")
