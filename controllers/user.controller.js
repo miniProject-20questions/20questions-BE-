@@ -33,6 +33,7 @@ class UserController {
          // res.cookie(process.env.COOKIE_NAME, inner.token, { maxAge: 1800000000 });
 
          //프론트로 토큰 전송
+         console.log(inner.token+"|"+res.locals.login)
          if(inner.token===res.locals.login){
             const error= new Error("Forbidden")
             error.code=403;
@@ -43,10 +44,10 @@ class UserController {
             token: inner.token
          });
 
-      }catch(error){
-         if(error===403){
-            console.log(error)
-            return res.status(error.code).send(error.message);
+      }catch(err){
+         if(err===403){
+            console.log(err)
+            return res.status(err.code).send(err.message);
          }
          console.log(err)
          return res.status(err.code).send(err.message);
