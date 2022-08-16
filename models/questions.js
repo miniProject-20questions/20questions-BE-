@@ -49,5 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     };
 
+ 
+
   return Questions;
 };
