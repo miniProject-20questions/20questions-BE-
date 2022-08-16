@@ -9,7 +9,7 @@ class UserService {
 
    //회원가입 진행
    userSignup = async (id, password, confirm,nickname) => {
-      if(id===null || password===null || confirm===null || nickname===null){
+      if(id===undefined || password===undefined || confirm===undefined || nickname===undefined){
          const error= new Error("BAD_REQUEST")
          error.code=400;
          throw error
@@ -38,7 +38,7 @@ class UserService {
       
       //user가 없으면 id가 같은 유저가 없다.
       if (user != undefined) {
-         const error= new Error("BAD_VALIDATION");
+         const error= new Error("EXIST_ID");
          error.code=403;
          throw error
 
@@ -77,7 +77,7 @@ class UserService {
 
    //로그인 진행
    userSignin = async (id, password) => {
-      if(id===null || password===null){
+      if(id===undefined || password===undefined){
          const error= new Error("BAD_REQUEST")
          error.code=400;
          throw error
@@ -108,11 +108,19 @@ class UserService {
    };
 
    idCheck=async(id)=>{
-      if(id===null){
-      const error= new Error("BAD_REQUEST")
-      error.code=400;
-      throw error
-   }
+      if(id===undefined){
+         const error= new Error("BAD_REQUEST")
+         error.code=400;
+         throw error
+      }
+      //정규식
+      //영어,숫자 4~9자리 (3인이유는 <이기떄문에)
+      const reg_Id = /^[A-Za-z0-9]{3,9}$/.test(id);
+      if (!reg_Id) {
+         const error= new Error("BAD_VALIDATION_ID");
+         error.code=403;
+         throw error
+      }
       //user:이미있는 유저중에 같은 id를 사용하는지 확인하기위해서 id로 유저정보를 가지고온다.
       const user = await this.userRepository.getUser(id);
       if (user != undefined) {
