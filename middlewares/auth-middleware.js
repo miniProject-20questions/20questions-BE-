@@ -4,10 +4,10 @@ require('dotenv').config();
 const userRepository = new UserRepository();
 
 module.exports = async (req, res, next) => {
-   // const { authorization } = req.headers;
-   const authorization = req.headers.cookie;
-   // const [authType, authToken] = (authorization || '').split(' ');
-   const [authType, authToken] = (authorization || '').split('=');
+   const { authorization } = req.headers;
+//    const authorization = req.headers.cookie;
+   const [authType, authToken] = (authorization || '').split(' ');
+//    const [authType, authToken] = (authorization || '').split('=');
 console.log(authToken,authType)
    if (!authToken || authType !== process.env.COOKIE_NAME) {
       return res.status(401).send({
