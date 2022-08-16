@@ -7,14 +7,18 @@ class QuestionService {
     getQuestions = async (quizId) => {
         const questions = await this.questionRepository.findAllQuestions(quizId);
 
+
         return questions.map((question) => {
             return {
-                quizId: question.quizId,
-                questionId: question.questionId,
-                content: question.content,
-                solved: question.solved,
-                count: question.count,
-            };
+                quizId: question.dataValues.quizId,
+                questionId: question.dataValues.questionId,
+                content: question.dataValues.content,
+                solved: question.dataValues.solved,
+                count: question.dataValues.count,
+                answer: question.dataValues.Quize.dataValues.answer
+            }
+
+
         });
     };
 
