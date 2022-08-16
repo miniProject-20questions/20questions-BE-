@@ -22,7 +22,7 @@ class QuestionService {
     createQuestion = async (quizId, userId, content) => {
 
         // content 입력 유무 확인
-        if (content === null) {
+        if (content === undefined) {
             const error = new Error("BAD_REQUEST");
             error.code = 400;
             throw error
@@ -34,14 +34,14 @@ class QuestionService {
 
         // 질문에 연결된 퀴즈 유무 확인
         if (quiz === null) {
-            const error = new Error("NOt_FOUND");
+            const error = new Error("NOT_FOUND_QUIZ");
             error.code = 404;
             throw error
         }
 
         // 출제자와 질문자 비교하여 출제자는 질문 등록 못하게 하기
         if (quiz.userId === userId) {
-            const error = new Error("Unauthorized");
+            const error = new Error("UNAUTHORIZED_USER");
             error.code = 401;
             throw error
         }
@@ -54,14 +54,14 @@ class QuestionService {
         // 완료된 퀴즈 확인
         if (exQuestion !== null) {
             if (quiz.answer === exQuestion.content) {
-                const error = new Error("Forbidden");
+                const error = new Error("FORBIDDEN_END");
                 error.code = 403;
                 throw error
             }
 
             // 이전 질문 solved 값 없으면 질문등록 못하게 하기 (첫번째 질문일 경우, 조건문 PASS)
             if (exQuestion.solved === null) {
-                const error = new Error("Forbidden");
+                const error = new Error("FORBIDDEN_SOL");
                 error.code = 403;
                 throw error
             }
@@ -77,7 +77,7 @@ class QuestionService {
         } else count = 1;
 
         if (count > 20) {
-            const error = new Error("Forbidden");
+            const error = new Error("FORBIDDEN_20");
             error.code = 403;
             throw error
         }
@@ -93,7 +93,7 @@ class QuestionService {
     checkQuestion = async (quizId, questionId, solved, userId) => {
 
         // solved 입력 유무 확인
-        if (solved === null) {
+        if (solved === undefined) {
             const error = new Error("BAD_REQUEST");
             error.code = 400;
             throw error
@@ -103,7 +103,7 @@ class QuestionService {
         const quiz = await this.questionRepository.compareQuiz(quizId);
 
         if (quiz.userId !== userId) {
-            const error = new Error("Unauthorized");
+            const error = new Error("UNAUTHORIZED_USER");
             error.code = 401;
             throw error
         }
@@ -113,14 +113,14 @@ class QuestionService {
 
         // 질문 유무 확인
         if (question === null) {
-            const error = new Error("NOt_FOUND");
+            const error = new Error("NOT_FOUND_QUE");
             error.code = 404;
             throw error
         }
 
         // solved 값이 이미 있는 경우 질문 중복체크 금지
         if (question.solved !== null) {
-            const error = new Error("Forbidden");
+            const error = new Error("FORBIDDEN_RE_SOL");
             error.code = 403;
             throw error
         }

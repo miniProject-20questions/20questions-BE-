@@ -54,6 +54,7 @@ class UserController {
       }
    };
 
+   //아이디 중복확인
    idCheck= async(req,res)=>{
       const { id } = req.body;
       try{

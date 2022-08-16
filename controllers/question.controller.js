@@ -32,7 +32,7 @@ class QuestionsController {
                 content
             );
 
-            res.status(200).send(SUCCESS);
+            res.status(200).send("SUCCESS");
         }catch(err){
             res.status(err.code).send(err.message);
             console.log(err)
@@ -50,7 +50,7 @@ class QuestionsController {
         try{
             await this.questionService.checkQuestion(quizId, questionId, solved, userId);
 
-            res.status(200).send(SUCCESS);
+            res.status(200).send("SUCCESS");
         }catch(err){
             res.status(err.code).send(err.message);
             console.log(err)
