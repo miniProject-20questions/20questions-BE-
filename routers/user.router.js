@@ -10,5 +10,7 @@ router.get("/",authMiddlewares,userController.checkUser);
 router.post('/signup', userController.userSignup);
 //로그인>>controller
 router.post('/signin',userController.userSignin);
+//아이디 체크
+router.post('/idCheck',userController.idCheck);
 
 module.exports = router;

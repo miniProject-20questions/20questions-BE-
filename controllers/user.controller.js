@@ -53,6 +53,18 @@ class UserController {
          return res.status(err.code).send(err.message);
       }
    };
+
+   idCheck= async(req,res)=>{
+      const { id } = req.body;
+      try{
+         const check = await this.userService.idCheck(id);
+         
+         return res.status(check.status).send(check.message)
+      }catch(err){
+         console.log(err)
+         return res.status(err.code).send(err.message)
+      }
+   }
 }
 
 module.exports = UserController;
