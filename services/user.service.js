@@ -106,6 +106,22 @@ class UserService {
       //토큰과 상태,메시지 전송
       return { status: 200, token: token };
    };
+
+   idCheck=async(id)=>{
+      if(id===null){
+      const error= new Error("BAD_REQUEST")
+      error.code=400;
+      throw error
+   }
+      //user:이미있는 유저중에 같은 id를 사용하는지 확인하기위해서 id로 유저정보를 가지고온다.
+      const user = await this.userRepository.getUser(id);
+      if (user != undefined) {
+         const error= new Error("EXIST_ID");
+         error.code=403;
+         throw error
+      }
+      return {status:200,message:"SUCCES"}
+   }
 }
 
 module.exports = UserService;

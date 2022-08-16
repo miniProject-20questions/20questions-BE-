@@ -10,9 +10,7 @@ module.exports = async (req, res, next) => {
 //    const [authType, authToken] = (authorization || '').split('=');
 console.log(authToken,authType)
    if (!authToken || authType !== process.env.COOKIE_NAME) {
-      return res.status(401).send({
-         errorMessage: '로그인 후 이용 가능한 기능입니다.',
-      });
+      return res.status(401).send("NONE_LOGIN");
    }
    try {
       const { id } = jwt.verify(authToken, process.env.SECRET_KEY);
@@ -21,8 +19,6 @@ console.log(authToken,authType)
          next();
       });
    } catch (err) {
-      res.status(401).send({
-         errorMessage: 'NONE_LOGIN',
-      });
+      res.status(401).send('NONE_LOGIN');
    }
 };
