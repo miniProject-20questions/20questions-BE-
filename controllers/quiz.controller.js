@@ -27,7 +27,7 @@ class QuizController {
             return res.status(200).json(result);
         } catch (err) {
 
-            return res.status(400).send(err.message);;
+            return res.status(400).send("BAD_REQUEST");;
         }
     };
 
@@ -58,7 +58,7 @@ class QuizController {
                 })
                 .validateAsync({ quizId, userId });
         } catch (err) {
-            return res.json(err.message);
+            return res.status(400).json("BAD_REQUEST");
         }
         try {
             const result = await this.quizService.getQuizById(quizId, userId);
@@ -81,13 +81,18 @@ class QuizController {
                 })
                 .validateAsync({ quizId, userId });
 
-            const result = await this.quizService.deleteQuiz(quizId, userId);
-
-            return res.status(200).json(result);
+            
         } catch (err) {
-            console.log(err);
 
-            return res.status(500).json(err.message);
+            return res.status(400).json("BAD_REQUEST");
+        }
+        try {
+            const result = await this.quizService.deleteQuiz(quizId, userId);
+            return res.status(200).json(result);
+
+        } catch (err) {
+
+            return res.json(err.message, err.code);
         }
     };
 
@@ -102,15 +107,19 @@ class QuizController {
                     quizId: joi.number().required(),
                     category: joi.number().min(7).max(7).required(),
                 })
-                .validateAsync({ quizId, category });
+                .validateAsync({ quizId, category });            
+        } catch (err) {           
 
+            return res.status(400).json("BAD_REQUEST");
+        }
+        
+        try{
             const result = await this.quizService.updateCategory(quizId, category);
 
             return res.status(200).json(result);
         } catch (err) {
-            console.log(err);
-
-            return res.status(500).json(err.message);
+            
+            return res.json(err.message, err.code);
         }
     }
 }
