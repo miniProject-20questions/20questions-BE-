@@ -1,7 +1,7 @@
 const QuizRepository = require('../repositories/quiz.repository');
 const QuestionRepository = require('../repositories/question.repository');
 
-class QuizService {    
+class QuizService {
     quizRepository;
     questionRepository;
 
@@ -9,7 +9,7 @@ class QuizService {
         this.quizRepository = new QuizRepository();
         this.questionRepository = new QuestionRepository();
     }
-    
+
     postQuiz = async (userId, title, category, answer) => {
 
         // const limitCategory = await this.quizRepository
@@ -24,66 +24,92 @@ class QuizService {
         return '퀴즈 생성';
     };
 
-    getQuiz = async (  ) => {        
+    getQuiz = async () => {
 
-        const result = await this.quizRepository.getQuiz();        
+        const result = await this.quizRepository.getQuiz();
 
-        return result.map((quiz)=> { 
+        return result.map((quiz) => {
             quiz.dataValues.count = quiz.Questions.length
             quiz.dataValues.nickname = quiz.dataValues.User.dataValues.nickname
-                  
+
             delete quiz.dataValues.Questions
             delete quiz.dataValues.User
-            
+
             return quiz;
         });
-            
+
     };
-    
 
-    getQuizById = async ( quizId, userId ) => {
 
-        const result = await this.quizRepository.getQuizById( quizId );
-        if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.')       
+    getQuizById = async (quizId, userId) => {
 
-        if(result.dataValues.Questions.length===0){
-            result.dataValues.count = 0
-        }else{
-            result.dataValues.count = result.dataValues.Questions[0].count
+        const response = await this.checkQuizExists(quizId);
+        let count = 0;
+        let nickname = '';
+        let guest = false;
+
+        if (response.Questions.length !== 0) {
+            count = response.Questions[0].count
         }
 
-        result.dataValues.nickname = result.dataValues.User.dataValues.nickname
+        nickname = response.User.dataValues.nickname
 
-        if (result.dataValues.User.dataValues.userId !== userId ) {
-            result.dataValues.guest = true
-        } else {result.dataValues.guest = false}
-                
-        delete result.dataValues.Questions
-        delete result.dataValues.User        
-               
-        return result;        
+        if (response.User.dataValues.userId !== userId)
+            guest = true
+
+        const result = {
+            quizId: response.quizId,
+            title: response.title,
+            category: response.category,
+            createdAt: response.createdAt,
+            count: count,
+            nickname: nickname,
+            guest: guest,
+        }
+
+        console.log(result)
+
+
+        return result;
     };
 
-    deleteQuiz = async ( quizId, userId ) => {             
+    deleteQuiz = async (quizId, userId) => {
 
-        const result = await this.quizRepository.getQuizById( quizId );
-        if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.');
-        if (result.userId !== userId) throw new Error('퀴즈 작성자만 퀴즈를 삭제할 수 있습니다.');
-            
-        const isDeleted = await this.quizRepository.deleteQuiz( quizId, userId );
-                        
+        const response = await this.checkQuizExists(quizId);
+        this.checkQuizOwner(response, userId);
+
+        const isDeleted = await this.quizRepository.deleteQuiz(quizId, userId);
+
         return isDeleted;
-        }
+    }
 
-    updateCategory = async ( quizId, category ) => {
+    updateCategory = async (quizId, category) => {
 
-        const result = await this.quizRepository.updateCategory ( quizId );
-        if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.');
-            
-        const isComplete = await this.quizRepository.updateCategory( quizId, category );
-                        
-        return {isComplete, message: "퀴즈가 완료되었습니다" };
-        }
+        const result = await this.checkQuizExists(quizId);
+
+        const isComplete = await this.quizRepository.updateCategory(quizId, category);
+
+        return { isComplete, message: "퀴즈가 완료되었습니다" };
+    }
+
+    checkQuizOwner(response, userId) {
+        if (response.User.dataValues.userId !== userId) {
+            const error = new Error("UNAUTHORIZED_USER");
+            error.code = 401;
+            throw error;
+        };
+    }
+
+    async checkQuizExists(quizId) {
+
+        const response = await this.quizRepository.getQuizById(quizId);
+        if (response.quizId === null){
+            const error = new Error("NOT_FOUND_QUIZ");
+            error.code = 404;
+            throw error
+        } else return response
+
+    }
 };
 
 

@@ -41,7 +41,7 @@ class QuizController {
         } catch (err) {
             console.log(err);
 
-            return res.status(500).json(err.message);
+            return res.status(404).json(err.message);
         }
     };
 
@@ -57,12 +57,14 @@ class QuizController {
                     userId: joi.number().required()
                 })
                 .validateAsync({ quizId, userId });
-
-            const result = await this.quizService.getQuizById(quizId,userId);
-
-            return res.json(result);
         } catch (err) {
             return res.json(err.message);
+        }
+        try {
+            const result = await this.quizService.getQuizById(quizId, userId);
+            return res.json(result);
+        } catch (err) {
+            return res.json(err.message, err.code);
         }
     };
 
@@ -90,21 +92,21 @@ class QuizController {
     };
 
     //퀴즈 완료
-    updateCategory = async (req,res) => {
+    updateCategory = async (req, res) => {
         const { quizId } = req.params;
         const { category } = req.body;
-        
-        try{
+
+        try {
             await joi
                 .object({
                     quizId: joi.number().required(),
-                    category : joi.number().min(7).max(7).required(),
+                    category: joi.number().min(7).max(7).required(),
                 })
                 .validateAsync({ quizId, category });
 
-            const result = await this.quizService.updateCategory(quizId, category); 
-            
-            return res.status(200).json(result);            
+            const result = await this.quizService.updateCategory(quizId, category);
+
+            return res.status(200).json(result);
         } catch (err) {
             console.log(err);
 
