@@ -33,8 +33,8 @@ class UserService {
       const reg_Pw = /^[A-Za-z0-9]{3,9}$/.test(password);
       //특수문자 제외
       const reg_Nick1 = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g.test(nickname);
-      //자리수가 4이상 9이하를 제외
-      const reg_Nick2 = nickname.length <4 || nickname>9;
+      //자리수가 2이상 9이하를 제외
+      const reg_Nick2 = nickname.length <2 || nickname>9;
       
       //user가 없으면 id가 같은 유저가 없다.
       if (user != undefined) {
