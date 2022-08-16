@@ -12,8 +12,6 @@ class QuizService {
 
     postQuiz = async (userId, title, category, answer) => {
 
-        // const limitCategory = await this.quizRepository
-
         await this.quizRepository.postQuiz(
             userId,
             title,
@@ -26,9 +24,9 @@ class QuizService {
 
     getQuiz = async () => {
 
-        const result = await this.quizRepository.getQuiz();
+        const response = await this.quizRepository.getQuiz();
 
-        return result.map((quiz) => {
+        return response.map((quiz) => {
             quiz.dataValues.count = quiz.Questions.length
             quiz.dataValues.nickname = quiz.dataValues.User.dataValues.nickname
 
@@ -66,10 +64,6 @@ class QuizService {
             nickname: nickname,
             guest: guest,
         }
-
-        console.log(result)
-
-
         return result;
     };
 
@@ -85,7 +79,7 @@ class QuizService {
 
     updateCategory = async (quizId, category) => {
 
-        const result = await this.checkQuizExists(quizId);
+        const response = await this.checkQuizExists(quizId);
 
         const isComplete = await this.quizRepository.updateCategory(quizId, category);
 
