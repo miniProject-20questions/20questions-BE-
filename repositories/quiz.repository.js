@@ -58,7 +58,7 @@ class QuizRepository{
             [
                 { 
                     model: Users ,
-                    attributes: ['nickname'],    
+                    attributes: ['nickname', 'userId'],    
                     },
                     { 
                     model: Questions,                    
@@ -75,7 +75,7 @@ class QuizRepository{
         },
             { where: { quizId : quizId }},
         )
-    }
+    }   
     
 }
 

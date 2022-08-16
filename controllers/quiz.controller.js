@@ -48,15 +48,17 @@ class QuizController {
     //퀴즈 상세 조회
     getQuizById = async (req, res) => {
         const { quizId } = req.params;
+        const { userId } = res.locals.user;
 
         try {
             await joi
                 .object({
                     quizId: joi.number().required(),
+                    userId: joi.number().required()
                 })
-                .validateAsync({ quizId });
+                .validateAsync({ quizId, userId });
 
-            const result = await this.quizService.getQuizById(quizId);
+            const result = await this.quizService.getQuizById(quizId,userId);
 
             return res.json(result);
         } catch (err) {
