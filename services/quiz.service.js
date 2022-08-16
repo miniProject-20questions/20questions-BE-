@@ -25,10 +25,19 @@ class QuizService {
         return '포스트 생성';
     };
 
-    getQuiz = async () => {                 
+    getQuiz = async (  ) => {        
 
-        const result = await this.quizRepository.getQuiz();        
-        return result;
+        const result = await this.quizRepository.getQuiz(  );       
+
+        return result.map((quiz)=> { 
+            quiz.dataValues.count = quiz.Questions.length
+            quiz.dataValues.nickname = quiz.dataValues.User.dataValues.nickname
+                  
+            delete quiz.dataValues.Questions
+            delete quiz.dataValues.User
+            
+            return quiz
+        });
             
     };
     
@@ -37,6 +46,13 @@ class QuizService {
 
         const result = await this.quizRepository.getQuizById( quizId );
         if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.')
+
+        result.dataValues.count = result.dataValues.Questions[0].dataValues.count
+        result.dataValues.nickname = result.dataValues.User.dataValues.nickname
+
+        delete result.dataValues.Questions
+        delete result.dataValues.User
+               
         return result;          
         
     };

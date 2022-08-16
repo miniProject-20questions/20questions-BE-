@@ -53,8 +53,19 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "quizId",
       onUpdate: "cascade",
       onDelete: "cascade",
+      })
+
+      models.Quizes.belongsTo(models.Users, {
+      foreignKey: "userId",  
       });
       };
+
+   // Quizes.associate = function (models) {
+   //    models.Quizes.belongsTo(models.Users, {
+   //    as: 'QuizCreator',
+   //    foreignKey: "userId",  
+   //    });
+   //    };
 
    return Quizes;
 };
