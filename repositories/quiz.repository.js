@@ -16,7 +16,7 @@ class QuizRepository{
         return;
     };
 
-    countQuizQuestion = async ( quizId ) => {
+    limitCategory = async ( ) => {
         return await Questions.count({
             where : { quizId }
         });        
@@ -69,10 +69,13 @@ class QuizRepository{
         });
     };
 
-
-
-
-    
+    updateCategory = async ( quizId, category ) => {
+        return await Quizes.update ({
+            category
+        },
+            { where: { quizId : quizId }},
+        )
+    }
     
 }
 

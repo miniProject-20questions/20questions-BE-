@@ -1,19 +1,18 @@
-const UserRepository = require('../repositories/user.repository');
 const QuizRepository = require('../repositories/quiz.repository');
 const QuestionRepository = require('../repositories/question.repository');
 
-class QuizService {
-    userRepository;
+class QuizService {    
     quizRepository;
     questionRepository;
 
     constructor() {
-        this.quizRepository = new QuizRepository();        
-        this.userRepository = new UserRepository();
+        this.quizRepository = new QuizRepository();
         this.questionRepository = new QuestionRepository();
     }
     
     postQuiz = async (userId, title, category, answer) => {
+
+        // const limitCategory = await this.quizRepository
 
         await this.quizRepository.postQuiz(
             userId,
@@ -27,7 +26,7 @@ class QuizService {
 
     getQuiz = async (  ) => {        
 
-        const result = await this.quizRepository.getQuiz(  );       
+        const result = await this.quizRepository.getQuiz();       
 
         return result.map((quiz)=> { 
             quiz.dataValues.count = quiz.Questions.length
@@ -67,7 +66,18 @@ class QuizService {
                         
         return isDeleted;
         }
+
+    updateCategory = async ( quizId, category ) => {
+
+        const result = await this.quizRepository.updateCategory ( quizId );
+        if ( result === null ) throw new Error ('존재하지 않는 퀴즈입니다.');
+            
+        const isComplete = await this.quizRepository.updateCategory( quizId, category );
+                        
+        return isComplete;
+        }
 };
+
 
 
 
