@@ -82,7 +82,7 @@ class QuizRepository {
                             attributes: [[sequelize.fn('max', sequelize.col('count')), 'count']],
                         },
                     ],
-                attributes: { exclude: ['answer', 'userId', 'updatedAt', 'Questions', 'User'] }
+                attributes: { exclude: [ 'userId', 'updatedAt', 'Questions', 'User'] }
             });
 
             return foundQuizes.dataValues;
