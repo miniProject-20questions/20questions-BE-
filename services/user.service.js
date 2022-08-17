@@ -85,6 +85,11 @@ class UserService {
       //유저의 존재를 확인하기 위해 id를 기준으로 Users테이블 탐색
       try{
          const user = await this.userRepository.getUser(id);
+         if(user===null||user===undefined){
+            const error= new Error("BAD_VALIDATION");
+            error.code=403;
+            throw error
+         }
          if (password != user.password) {
             const error= new Error("BAD_VALIDATION");
             error.code=403;

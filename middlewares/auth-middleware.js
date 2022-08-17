@@ -8,7 +8,6 @@ module.exports = async (req, res, next) => {
 //    const authorization = req.headers.cookie;
    const [authType, authToken] = (authorization || '').split(' ');
 //    const [authType, authToken] = (authorization || '').split('=');
-console.log(authToken,authType)
    if (!authToken || authType !== process.env.COOKIE_NAME) {
       return res.status(401).send("NONE_LOGIN");
    }
