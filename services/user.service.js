@@ -95,10 +95,18 @@ class UserService {
 
       
       //토큰 생성
-      const token = jwt.sign({ id }, process.env.SECRET_KEY);
-      
-      //토큰과 상태,메시지 전송
-      return { status: 200, token: token };
+      try {
+         const token = jwt.sign({ id }, process.env.SECRET_KEY,{
+            expiresIn: '30m', //1분
+          });
+         //  const token = jwt.sign({id:{ id },iat: Math.floor(Date.now() / 1000) - 30 }, process.env.SECRET_KEY);
+         //토큰과 상태,메시지 전송
+         return { status: 200, token: token };
+      } catch (err) {
+         const error= new Error("BAD_TOKEN");
+         error.code=403;
+         throw error        
+      }
    };
 
    //아이디 중복확인

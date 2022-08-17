@@ -6,8 +6,21 @@ require('dotenv').config();
 const port = process.env.EXPRESS_PORT;
 const indexRouter = require('./routers');
 
+const whitelist = ["http://localhost:3000"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log(origin);
+      callback(new Error("NOT_ALLOWED_ORIGIN"));
+    }
+  },
+};
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
+// app.use(cors());
 //https://test-cors.org
 
 // sequelize.sync({ force: true });
