@@ -9,7 +9,7 @@ class UserService {
 
    //회원가입 진행
    userSignup = async (id, password, confirm,nickname) => {
-      if(id===undefined || password===undefined || confirm===undefined || nickname===undefined){
+      if(id===undefined||password===undefined || confirm===undefined || nickname===undefined){
          const error= new Error("BAD_REQUEST")
          error.code=400;
          throw error
@@ -65,14 +65,8 @@ class UserService {
       }
       
       //회원가입 진행
-      try{
-         const create = await this.userRepository.createUser(id, password,nickname);
-         return { status: 200};
-      }catch(err){
-         const error= new Error("FAILD_SQL");
-         error.code=405 ;
-         throw error
-      }
+      const create = await this.userRepository.createUser(id, password,nickname);
+      return { status: 200};
    };
 
    //로그인 진행
@@ -96,12 +90,7 @@ class UserService {
             throw error
          }
       }catch(err){
-         if(err.code==403){
-            throw err;
-         }
-         const error= new Error("FAILD_SQL");
-         error.code=405;
-         throw error
+         throw err;
       }
 
       
