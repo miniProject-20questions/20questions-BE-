@@ -8,11 +8,13 @@
 - BAD_VALIDATION_NICK(403) : 닉네임 조건이 맞지 않습니다.
 - FAILD_SQL(405) : 데이터베이스 에러
 ## 로그인 ##
+- DONE_LOGIN(400) : 이미 로그인되어있습니다.
 - BAD_REQUEST(400) : BODY 입력값을 확인해주세요.
 - BAD_VALIDATION(403) : ID나 PW가 틀렸습니다.
 - FAILD_SQL(405) : 데이터베이스 에러
 ## 아이디 중복체크 ##
 - BAD_REQUEST(400) : BODY 입력값을 확인해주세요.
+- BAD_VALIDATION_ID(403) : ID 조건이 맞지 않습니다.
 - EXIST_ID(403) : ID 중복
 ## 로그인 토큰 ##
 - NONE_LOGIN(401) : 로그인 후 이용해주세요.
@@ -25,10 +27,13 @@
 ## 상세페이지(퀴즈상세조회) ##
 - NOT_FOUND_QUIZ(404) : 존재하지 않는 퀴즈입니다.
 - FAILD_SQL(405) : 데이터베이스 에러
+- BAD_REQUEST(400) : PARAMS 입력값을 확인해주세요.
 ## 상세페이지(퀴즈삭제) ##
 - NOT_FOUND_QUIZ(404) : 존재하지 않는 퀴즈입니다.
 - UNAUTHORIZED_USER(401) : 퀴즈 작성자만 퀴즈를 삭제할 수 있습니다.
 - FAILD_SQL_DEL(405) : 데이터베이스 에러
+- BAD_REQUEST(400) : PARAMS 입력값을 확인해주세요.
+
 ## 상세페이지(퀴즈카테고리수정) ##
 - NOT_FOUND_QUIZ(404) : 존재하지 않는 퀴즈입니다.
 - BAD_REQUEST(400) : BODY 혹은 PARAMS 입력값을 확인해주세요.
