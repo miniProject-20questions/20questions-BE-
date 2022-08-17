@@ -7,6 +7,7 @@ const port = process.env.EXPRESS_PORT;
 const indexRouter = require('./routers');
 
 const whitelist = ["http://localhost:3000"];
+// const whitelist = ["http://prac-ye.s3-website.ap-northeast-2.amazonaws.com"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
