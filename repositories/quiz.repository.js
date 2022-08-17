@@ -61,7 +61,7 @@ class QuizRepository {
                 where: { quizId, userId }
             });
         } catch (err) {
-            const error = new Error("FAILD_SQL");
+            const error = new Error("FAILD_SQL_DEL");
             error.code = 405;
             throw error
         };
@@ -82,7 +82,7 @@ class QuizRepository {
                             attributes: [[sequelize.fn('max', sequelize.col('count')), 'count']],
                         },
                     ],
-                attributes: { exclude: ['answer', 'userId', 'updatedAt', 'Questions', 'User'] }
+                attributes: { exclude: [ 'userId', 'updatedAt', 'Questions', 'User'] }
             });
 
             return foundQuizes.dataValues;
@@ -101,7 +101,7 @@ class QuizRepository {
                 { where: { quizId: quizId } },
             )
         } catch (err) {
-            const error = new Error("FAILD_SQL");
+            const error = new Error("FAILD_SQL_UP");
             error.code = 405;
             throw error
         };

@@ -8,11 +8,13 @@
 - BAD_VALIDATION_NICK(403) : 닉네임 조건이 맞지 않습니다.
 - FAILD_SQL(405) : 데이터베이스 에러
 ## 로그인 ##
+- DONE_LOGIN(400) : 이미 로그인되어있습니다.
 - BAD_REQUEST(400) : BODY 입력값을 확인해주세요.
 - BAD_VALIDATION(403) : ID나 PW가 틀렸습니다.
 - FAILD_SQL(405) : 데이터베이스 에러
 ## 아이디 중복체크 ##
 - BAD_REQUEST(400) : BODY 입력값을 확인해주세요.
+- BAD_VALIDATION_ID(403) : ID 조건이 맞지 않습니다.
 - EXIST_ID(403) : ID 중복
 ## 로그인 토큰 ##
 - NONE_LOGIN(401) : 로그인 후 이용해주세요.

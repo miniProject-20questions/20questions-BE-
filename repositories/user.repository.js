@@ -2,36 +2,60 @@ const { Users } = require('../models');
 
 class UserRepository {
    getUser = async (id) => {
-      const user = await Users.findOne({
-         where: {
-            id,
-         },
-      });
-      return user;
+      try{
+         const user = await Users.findOne({
+            where: {
+               id,
+            },
+         });
+         return user;
+      }catch(err){
+         const error= new Error("FAILD_SQL");
+         error.code=405 ;
+         throw error;
+      }
    };
    createUser = async (id, password,nickname) => {
-      const create = await Users.create({
-         id,
-         password,
-         nickname,
-      });
-      return create;
+      try{
+         const create = await Users.create({
+            id,
+            password,
+            nickname,
+         });
+         return create;
+      }catch(err){
+         const error= new Error("FAILD_SQL");
+         error.code=405 ;
+         throw error;
+      }
    };
    getNickname=async(nickname)=>{
-      const nick = await Users.findOne({
-         where: {
-            nickname,
-         },
-      });
-      return nick;
+      try{
+         const nick = await Users.findOne({
+            where: {
+               nickname,
+            },
+         });
+         return nick;
+      }catch(err){
+         const error= new Error("FAILD_SQL");
+         error.code=405 ;
+         throw error;
+      }
    }
    getNicknameById=async(userId)=>{
-      const nickname=await Users.findOne({
-         where:{
-            userId
-         }
-      })
-      return nickname
+      try{
+         const nickname=await Users.findOne({
+            where:{
+               userId
+            }
+         })
+         return nickname
+      }catch(err){
+         const error= new Error("FAILD_SQL");
+         error.code=405 ;
+         throw error;
+      }
    }
 }
 
