@@ -25,8 +25,9 @@ class UserController {
 
    //로그인
    userSignin = async (req, res, next) => {
-      const { authorization } = req.headers;
-      if(authorization!==null||authorization!==undefined){
+      const  authorization  = req.headers.authorization;
+      const [authType, authToken] = (authorization || '').split(' ');
+      if(authToken!==undefined && authToken!==null && authType==="BEAVER"){
          return res.status(400).send("DONE_LOGIN");
       }
       const { id, password} = req.body;
@@ -37,7 +38,6 @@ class UserController {
          // res.cookie(process.env.COOKIE_NAME, inner.token, { maxAge: 1800000000 });
 
          //프론트로 토큰 전송
-         console.log(inner.token+"|"+res.locals.login)
          if(inner.token===res.locals.login){
             const error= new Error("Forbidden")
             error.code=403;
