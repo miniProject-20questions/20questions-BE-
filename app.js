@@ -6,7 +6,7 @@ require('dotenv').config();
 const port = process.env.EXPRESS_PORT;
 const indexRouter = require('./routers');
 
-const whitelist = ["http://localhost:3000"];
+const whitelist = ["https://20questions-fe.vercel.app"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
