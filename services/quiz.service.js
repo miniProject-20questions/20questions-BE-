@@ -62,6 +62,7 @@ class QuizService {
             title: response.title,
             category: response.category,
             createdAt: response.createdAt,
+            answer:response.answer,
             count: count,
             nickname: nickname,
             guest: guest,
