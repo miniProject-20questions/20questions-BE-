@@ -15,7 +15,7 @@ class QuestionRepository {
                             attributes: ['answer'],
                         },
                     ],
-                order: [['count', 'ASC']],
+                order: [['count', 'DESC']],
             })
 
             return questions;
