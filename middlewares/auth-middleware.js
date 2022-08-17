@@ -12,7 +12,8 @@ module.exports = async (req, res, next) => {
       return res.status(401).send("NONE_LOGIN");
    }
    try {
-      const { id } = jwt.verify(authToken, process.env.SECRET_KEY);
+      const token = jwt.verify(authToken, process.env.SECRET_KEY);
+      const id =token.id
       await userRepository.getUser(id).then((user) => {
          res.locals.user = user;
          next();
