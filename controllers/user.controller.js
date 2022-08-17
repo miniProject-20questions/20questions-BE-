@@ -25,6 +25,10 @@ class UserController {
 
    //로그인
    userSignin = async (req, res, next) => {
+      const { authorization } = req.headers;
+      if(authorization!==null||authorization!==undefined){
+         return res.status(400).send("DONE_LOGIN");
+      }
       const { id, password} = req.body;
       try{
          const inner = await this.userService.userSignin(id, password);
