@@ -19,7 +19,7 @@ class QuizService {
             answer
         );
 
-        return '퀴즈 생성';
+        return 'SUCESS';
     };
 
     getQuiz = async () => {
@@ -74,7 +74,7 @@ class QuizService {
 
         const isDeleted = await this.quizRepository.deleteQuiz(quizId, userId);
 
-        return isDeleted;
+        return (isDeleted);
     }
 
     updateCategory = async (quizId, category) => {
@@ -83,7 +83,7 @@ class QuizService {
 
         const isComplete = await this.quizRepository.updateCategory(quizId, category);
 
-        return { isComplete, message: "퀴즈가 완료되었습니다" };
+        return { isComplete, message: "SUCESS" };
     }
 
     checkQuizOwner(response, userId) {
