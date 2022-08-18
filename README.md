@@ -48,6 +48,9 @@
 ![Untitled (4)](https://user-images.githubusercontent.com/109029407/185392521-d2e12078-11fb-473b-9cd7-1241039de531.png)
 
 ## 4. 프로젝트 시연 ##
+### 프로젝트 시연영상 ###
+https://www.youtube.com/watch?v=GysNXMKo6mA
+
 ### 회원가입 ###
 
 ![KakaoTalk_20220818_211812103](https://user-images.githubusercontent.com/109029407/185394700-bdf332c4-7cec-4503-8223-6e9de5ab1d0a.png)
