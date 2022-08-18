@@ -20,19 +20,9 @@ class QuizRepository {
         };
     };
 
-    // limitCategory = async ( ) => {
-    //     return await Questions.count({
-    //         where : { quizId }
-    //     });        
-    // };
-
-    // getNickname = async () => {
-    //     await Users.find
-    // };
-
     getQuiz = async () => {
         try{
-            return await Quizes.findAll({
+            const response = await Quizes.findAll({
                 order: [['createdAt', 'DESC']],
                 include:
                     [
@@ -46,13 +36,14 @@ class QuizRepository {
                     ],
                 attributes: { exclude: ['answer', 'userId', 'updatedAt', 'Questions', 'User'] }
             });
+            
+            return response;
+
         } catch (err) {
             const error = new Error("FAILD_SQL");
             error.code = 405;
             throw error
         };
-
-
     };
 
     deleteQuiz = async (quizId, userId) => {
@@ -69,7 +60,7 @@ class QuizRepository {
 
     getQuizById = async (quizId) => {
         try {
-            const foundQuizes = await Quizes.findOne({
+            const response = await Quizes.findOne({
                 where: { quizId },
                 include:
                     [
@@ -85,7 +76,7 @@ class QuizRepository {
                 attributes: { exclude: [ 'userId', 'updatedAt', 'Questions', 'User'] }
             });
 
-            return foundQuizes.dataValues;
+            return response.dataValues;
         } catch (err) {
             const error = new Error("FAILD_SQL");
             error.code = 405;
