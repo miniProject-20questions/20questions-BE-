@@ -26,13 +26,13 @@ class QuestionsController {
         const { content } = req.body;
 
         try{
-            await this.questionService.createQuestion(
+            const result = await this.questionService.createQuestion(
                 quizId,
                 userId,
                 content
             );
 
-            res.status(200).send("SUCCESS");
+            res.status(200).send(result);
         }catch(err){
             res.status(err.code).send(err.message);
             console.log(err)

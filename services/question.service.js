@@ -88,7 +88,14 @@ class QuestionService {
 
         await this.questionRepository.createQuestion(quizId, content, count);
 
-        return;
+        let message = '';
+        if(content === quiz.answer) {
+            message = "SUCCESS_ANSWER"
+            return message;
+        } else {
+            message = "SUCCESS_QUESTION"
+            return message;
+        }
 
     }
 
