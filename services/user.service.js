@@ -97,7 +97,7 @@ class UserService {
       //토큰 생성
       try {
          const token = jwt.sign({ id }, process.env.SECRET_KEY,{
-            expiresIn: '2m', //1분
+            expiresIn: '30m', //1분
           });
          //  const token = jwt.sign({id:{ id },iat: Math.floor(Date.now() / 1000) - 30 }, process.env.SECRET_KEY);
          //토큰과 상태,메시지 전송
